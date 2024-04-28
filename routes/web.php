@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 
-Route::get('test20',[MyController::class,'my_data']);
+Route::get('test20', [MyController::class,'my_data']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,9 +32,18 @@ Route::get('form1', function() {
     return view('form1');
 });
 
-Route::post('recform1', function() {
-    return 'Data received';
+Route::post('recform1', function (Illuminate\Http\Request $request) {
+    $firstName = $request->input('fname');
+    $lastName = $request->input('lname');
+
+    return "First Name: " . $firstName . "<br>" .
+           "Last Name: " . $lastName;
 })->name('receiveform1');
+
+//Route::post('recform1', function() {
+   // return 'Data received';
+//})->name('receiveform1');
+
 //Route::fallback(function() {
       // return 'The required is not found';
       //return redirect('/');
