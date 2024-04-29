@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
+use App\Http\Controllers\ClientController;
 
 Route::get('test20', [MyController::class,'my_data']);
+
+Route::get('insertClient', [ClientController::class,'store']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +30,6 @@ Route:: prefix('cars')->group(function() {
     });
 });
 
-
 Route::get('form1', function() {
     return view('form1');
 });
@@ -48,3 +50,5 @@ Route::post('recform1', function (Illuminate\Http\Request $request) {
       // return 'The required is not found';
       //return redirect('/');
 //});
+Route::get('formdisplay',[ClientController::class,'create'])->name('receiveform2');
+Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
