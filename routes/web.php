@@ -34,13 +34,15 @@ Route::get('form1', function() {
     return view('form1');
 });
 
-Route::post('recform1', function (Illuminate\Http\Request $request) {
-    $firstName = $request->input('fname');
-    $lastName = $request->input('lname');
+Route::post('recform1', [MyController::class, 'receiveData'])->name('receiveform1');
 
-    return "First Name: " . $firstName . "<br>" .
-           "Last Name: " . $lastName;
-})->name('receiveform1');
+//Route::post('recform1', function (Illuminate\Http\Request $request) {
+   // $firstName = $request->input('fname');
+   // $lastName = $request->input('lname');
+
+   // return "First Name: " . $firstName . "<br>" .
+  //         "Last Name: " . $lastName;
+//})->name('receiveform1');
 
 //Route::post('recform1', function() {
    // return 'Data received';
