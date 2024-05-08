@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\StudentController;
+
+Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
+Route::get('addStudent', [StudentController::class,'create']);
 
 Route::get('test20', [MyController::class,'my_data']);
 
@@ -52,5 +56,9 @@ Route::post('recform1', [MyController::class, 'receiveData'])->name('receiveform
       // return 'The required is not found';
       //return redirect('/');
 //});
+
 Route::get('formdisplay',[ClientController::class,'create'])->name('receiveform2');
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
+
+
+
