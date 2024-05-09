@@ -5,6 +5,10 @@ use App\Http\Controllers\MyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StudentController;
 
+Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
+Route::get('addClient', [ClientController::class,'create'])->name('addClient');
+Route::get('Clients', [ClientController::class,'index'])->name('Clients');
+
 Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
 Route::get('addStudent', [StudentController::class,'create']);
 
@@ -57,8 +61,8 @@ Route::post('recform1', [MyController::class, 'receiveData'])->name('receiveform
       //return redirect('/');
 //});
 
-Route::get('formdisplay',[ClientController::class,'create'])->name('receiveform2');
-Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
+//Route::get('addClient',[ClientController::class,'create'])->name('receiveform2');
+//Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 
 
 
