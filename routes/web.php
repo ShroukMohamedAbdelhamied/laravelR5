@@ -5,12 +5,13 @@ use App\Http\Controllers\MyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StudentController;
 
+Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
+Route::get('addStudent', [StudentController::class,'create'])->name('addStudent');
+Route::get('Students', [StudentController::class,'index'])->name('Students');
+
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient', [ClientController::class,'create'])->name('addClient');
 Route::get('Clients', [ClientController::class,'index'])->name('Clients');
-
-Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
-Route::get('addStudent', [StudentController::class,'create']);
 
 Route::get('test20', [MyController::class,'my_data']);
 
