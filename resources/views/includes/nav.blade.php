@@ -19,6 +19,7 @@
       <ul class="nav navbar-nav">
         <li><a href="{{ route('addClient') }}">Add Client</a></li>
         <li><a href="{{ route('Clients') }}">Clients</a></li>
+        <li><a href="{{ route('trashClient') }}">Trash</a></li>
         <li><a href="#">Page 2</a></li>
         <li><a href="#">Page 3</a></li>
       </ul>
