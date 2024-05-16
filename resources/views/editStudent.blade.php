@@ -2,7 +2,7 @@
 <html>
 <head>
 <?php 
-  $title = "Students";
+  $title = "Edit Students";
    ?>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -12,14 +12,15 @@
 @include('includes.nav')
 
 <div class="container" style="margin-left: 20px ">
-<h2>Insert Student</h2>
+<h2>Edit Student</h2>
 
-<form action="{{ route('insertStudent') }}" method="POST">
+<form action="{{ route('updateStudents', $student->id) }}" method="POST">
       @csrf
+      @method('put')
   <label for="studentName">Student name:</label><br>
-  <input type="text" id="studentName" name="studentName" value=""><br>
+  <input type="text" id="studentName" name="studentName" value="{{ $student->studentName }}"><br>
   <label for="age">Age:</label><br>
-  <input type="text" id="age" name="age" value=""><br><br>
+  <input type="text" id="age" name="age" value="{{ $student->age }}"><br><br>
   <input type="submit" value="Submit">
 </form> 
 
