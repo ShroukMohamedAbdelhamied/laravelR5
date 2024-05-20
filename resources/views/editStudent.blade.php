@@ -18,9 +18,20 @@
       @csrf
       @method('put')
   <label for="studentName">Student name:</label><br>
-  <input type="text" id="studentName" name="studentName" value="{{ $student->studentName }}"><br>
+  <p style= "color: red">
+  @error('studentName')
+     {{ $message }}
+  @enderror
+</p>
+  <input type="text" id="studentName" name="studentName" placeholder="Student Name" value="{{ $student->studentName }}"><br>
+  
   <label for="age">Age:</label><br>
-  <input type="text" id="age" name="age" value="{{ $student->age }}"><br><br>
+  <p style= "color: red">
+  @error('age')
+     {{ $message }}
+  @enderror
+</p>
+  <input type="text" id="age" name="age" placeholder="Age" value="{{ $student->age }}"><br><br>
   <input type="submit" value="Submit">
 </form> 
 

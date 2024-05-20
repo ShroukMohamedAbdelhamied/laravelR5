@@ -68,8 +68,14 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Student::where('id', $id)->update($request->only($this->columns));
-        return redirect('Students');
+        $data = $request->validate([
+            'studentName' => 'required|max:100|min:3',
+            'age' =>'required|max:2',
+           ]);
+           $student = Student::findOrFail($id);
+           $student->update($data);
+           return redirect('Students');
+        //Student::where('id', $id)->update($request->only($this->columns));
     }
 
     /**
