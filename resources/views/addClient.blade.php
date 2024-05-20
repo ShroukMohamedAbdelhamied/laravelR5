@@ -23,7 +23,7 @@
      {{ $message }}
   @enderror
 </p>
-  <input type="text"  name="clientname" value=""><br>
+  <input type="text"  name="clientname"  placeholder="Client Name" value="{{ old('clientname') }}"><br>
 
   <label for="phone">phone:</label><br>
   <p style= "color: red">
@@ -31,7 +31,7 @@
      {{ $message }}
   @enderror
 </p>
-  <input type="text"  name="phone" value=""><br>
+  <input type="text"  name="phone" placeholder="Phone" value="{{ old('phone') }}"><br>
   
   <label for="email">email:</label><br>
   <p style= "color: red">
@@ -39,10 +39,15 @@
      {{ $message }}
   @enderror
 </p>
-  <input type="email"  name="email" value=""><br>
+  <input type="email"  name="email" placeholder="Email" value="{{ old('email') }}"><br>
   
   <label for="website">website:</label><br>
-  <input type="text"  name="website" value=""><br><br>
+  <p style= "color: red">
+  @error('website')
+     {{ $message }}
+  @enderror
+</p>
+  <input type="text"  name="website" placeholder="Website" value="{{ old('website') }}"><br><br>
  
   <input type="submit" value="Submit">
   </form> 

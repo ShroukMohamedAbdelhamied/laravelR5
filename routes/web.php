@@ -14,7 +14,8 @@ Route::get('showStudent/{id}',[StudentController::class,'show'])->name('showStud
 Route::delete('delStudent', [StudentController::class,'destroy'])->name('delStudent');
 Route::delete('forceDeleteStudent',[StudentController::class,'forceDelete'])->name('forceDeleteStudent');
 Route::get('trashStudent',[StudentController::class,'trash'])->name('trashStudent');
-Route::get('restoreStudent/{id}',[StudentController::class,'restore'])->name('restoreStudent');
+Route::post('restoreStudent',[StudentController::class,'restore'])->name('restoreStudent');
+//Route::get('restoreStudent/{id}',[StudentController::class,'restore'])->name('restoreStudent');
 
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient', [ClientController::class,'create'])->name('addClient');

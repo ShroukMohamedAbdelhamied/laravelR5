@@ -23,7 +23,7 @@
      {{ $message }}
   @enderror
 </p>
-  <input type="text" id="clientname" name="clientname" class="form-control" value="{{ $client->clientname }}"><br>
+  <input type="text" id="clientname" name="clientname" class="form-control" placeholder="Client Name" value="{{ $client->clientname }}"><br>
   
   <label for="phone">phone:</label><br>
   <p style= "color: red">
@@ -31,7 +31,7 @@
      {{ $message }}
   @enderror
 </p>
-  <input type="text" id="phone" name="phone" class="form-control" value="{{ $client->phone }}"><br>
+  <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone" value="{{ $client->phone }}"><br>
   
   <label for="email">email:</label><br>
   <p style= "color: red">
@@ -39,10 +39,15 @@
      {{ $message }}
   @enderror
 </p>
-  <input type="email" id="email" name="email" class="form-control" value="{{ $client->email }}"><br>
+  <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="{{ $client->email }}"><br>
   
   <label for="website">website:</label><br>
-  <input type="text" id="website" name="website" class="form-control" value="{{ $client->website }}"><br><br>
+  <p style= "color: red">
+  @error('website')
+     {{ $message }}
+  @enderror
+</p>
+  <input type="text" id="website" name="website" class="form-control"  placeholder="Website" value="{{ $client->website }}"><br><br>
  
   <input type="submit" class="form-control" value="Submit">
   </form> 

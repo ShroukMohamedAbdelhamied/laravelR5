@@ -78,7 +78,8 @@ public function update(Request $request, string $id)
         'website'=>'required',
     ]);
 
-    Client::where('id', $id)->update($data);
+    $client = Client::findOrFail($id);
+    $client->update($data);
     return redirect('Clients');
 }
 
@@ -91,12 +92,17 @@ public function update(Request $request, string $id)
         Client::where('id', $id)->delete();
         return redirect('Clients');
     }
+
+    /**
+     * ForceDelete
+     */
     public function forceDelete(Request $request)
     {
         $id = $request->id;
         Client::where('id', $id)->forceDelete();
         return redirect('trashClient');
     }
+
 // Trash
 public function trash()
 {

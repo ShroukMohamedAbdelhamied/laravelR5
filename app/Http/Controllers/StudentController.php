@@ -34,10 +34,16 @@ class StudentController extends Controller
          // $student->studentName = $request->studentName;
          // $student->age = $request->age;
          // $student->save();
-         Student::create($request->only($this->columns));
-         return redirect('Students');
+         //Student::create($request->only($this->columns));
+         $data = $request->validate([
+            'studentName' => 'required|max:100|min:3',
+            'age' =>'required|max:2',
+           ]);
+           Student::create($data);
+           return redirect('Students');
+        }
+         //return redirect('Students');
         // return 'Inserted Successfully';
-    }
 
     /**
      * Display the specified resource.
@@ -74,5 +80,44 @@ class StudentController extends Controller
         $id = $request->id;
         Student::where('id', $id)->delete();
         return redirect('Students');
+    }
+
+    /**
+     * Trash the specified resource.
+     */
+
+    public function trash()
+    {
+       $trashed = Student::onlyTrashed()->get();
+       return view('trashStudent', compact('trashed'));
+    }
+
+    /**
+     * Restore.
+     */
+    //public function restore(string $id)
+    //{
+    // Student::where('id', $id)->restore();
+    // return redirect('Students');
+    //}
+    // In (trashStudent.blade.php)<td><a href="{{ route('restoreClient', $client->id) }}">Restore</a></td>
+
+    /**
+     * Restore with more security.
+     */
+    public function restore(Request $request)
+    {
+        $id = $request->id;
+        Student::where('id', $id)->restore();
+        return redirect('Students');
+    }
+    /**
+     * ForceDelete
+     */
+    public function forceDelete(Request $request)
+    {
+        $id = $request->id;
+        Student::where('id', $id)->forceDelete();
+        return redirect('trashStudent');
     }
 }

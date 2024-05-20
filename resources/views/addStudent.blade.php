@@ -17,9 +17,21 @@
 <form action="{{ route('insertStudent') }}" method="POST">
       @csrf
   <label for="studentName">Student name:</label><br>
-  <input type="text" id="studentName" name="studentName" value=""><br>
+  <p style= "color: red">
+  @error('studentName')
+     {{ $message }}
+  @enderror
+</p>
+  <input type="text" id="studentName" name="studentName" placeholder="Student Name" value="{{ old('studentName') }}"><br>
+  <br>
   <label for="age">Age:</label><br>
-  <input type="text" id="age" name="age" value=""><br><br>
+  <p style= "color: red">
+  @error('age')
+     {{ $message }}
+  @enderror
+</p>
+  <input type="text" id="age" name="age" placeholder="Age" value="{{ old('age') }}"><br><br>
+
   <input type="submit" value="Submit">
 </form> 
 
