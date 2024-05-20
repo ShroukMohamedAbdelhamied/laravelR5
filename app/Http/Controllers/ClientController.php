@@ -37,12 +37,26 @@ class ClientController extends Controller
     //   $client->email=$request->input('email');
     //    $client->website=$request->input('website');
        //$client->save();
+       //return dd($request->all())
+      $messages = $this->errMsg();
+
        $data = $request->validate([
         'clientname' => 'required|max:100|min:5',
         'phone' =>'required|min:11',
         'email' =>'required|email:rfc',
         'website'=>'required',
-       ]);
+        'City'=>'required|max:30',
+        'image'=>'required',
+       ], $messages);
+
+       $imgExt = $request->image->getClientOriginalExtension();
+       $fileName = time() . '.' . $imgExt;
+       $path = 'assets/images';
+       $request->image->move($path, $fileName);
+
+       $data['image'] = $fileName;
+
+       $data['active'] = isset($request->active);
        Client::create($data);
        return redirect('Clients');
        //return view('clients');
@@ -114,5 +128,13 @@ public function restore(string $id)
 {
     Client::where('id', $id)->restore();
     return redirect('Clients');
+}
+// Error Custom Messages
+public function errMsg(){
+return [
+    'clientname.required' => 'The Client name is missed, Please Insert',
+    'clientname.min' => 'length less than 5, Please Insert More Chars',
+    'City' => 'Select a city from the following:',
+];
 }
 }

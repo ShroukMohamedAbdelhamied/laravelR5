@@ -49,7 +49,27 @@
 </p>
   <input type="text" id="website" name="website" class="form-control"  placeholder="Website" value="{{ $client->website }}"><br><br>
  
-  <input type="submit" class="form-control" value="Submit">
+  <label for="City">City:</label><br>
+    <p style="color: red">
+      @error('City')
+        {{ $message }}
+      @enderror
+    </p>
+    <select name="City" id="City" class="form-control">
+      <option value="">Please Select City</option>
+      <option value="Cairo" {{ old('City') == 'Cairo' ? 'selected' : '' }}>Cairo</option>
+      <option value="Giza" {{ old('City') == 'Giza' ? 'selected' : '' }}>Giza</option>
+      <option value="Alex" {{ old('City') == 'Alex' ? 'selected' : '' }}>Alex</option>
+    </select>
+    <br><br>
+    <label for="active">Active:</label><br>
+    <input type="checkbox" id="active" name="active" class="form-control" {{ old('active') ? 'checked' : '' }}><br><br>
+
+    <p><img src="{{ asset('assets/images/' . $client->image)  }}" alt=""></p>
+    <label for="image">Image:</label><br>
+    <input type="file" id="image" name="image" class="form-control"><br><br>
+
+    <input type="submit" value="Submit">
   </form> 
 </div>
 
