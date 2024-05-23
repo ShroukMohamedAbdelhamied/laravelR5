@@ -38,7 +38,13 @@
         <td>{{ $client->website }}</td>
         <td>{{ $client->City }}</td>
         <td>{{ $client->active ? 'Yes' : 'No' }}</td>
-        <td>{{ $client->image }}</td>
+        <td>
+    @if ($client->image)
+        <img src="{{ asset('assets/images/' . $client->image) }}" alt="Client Image" class="img-thumbnail">
+    @else
+        <span class="text-danger">No valid image available.</span>
+    @endif
+</td>
         <td><a href="{{ route('editClients', $client->id) }}">Edit</a></td>
         <td><a href="{{ route('showClient', $client->id)}}">Show</a></td>
         <td>

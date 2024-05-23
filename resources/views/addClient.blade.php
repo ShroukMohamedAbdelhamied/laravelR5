@@ -66,6 +66,11 @@
     <input type="checkbox" id="active" name="active" class="form-control" {{ old('active') ? 'checked' : '' }}>
   
     <label for="image">Image:</label><br>
+    <p style= "color: red">
+  @error('image')
+     {{ $message }}
+  @enderror
+</p>
     <input type="file" id="image" name="image" class="form-control"><br><br>
 
     <input type="submit" value="Submit">

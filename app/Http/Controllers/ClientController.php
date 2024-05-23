@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Client;
-use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ClientController extends Controller
 {
     private $columns = ['clientname', 'phone', 'email', 'website'];
+
     /**
      * Display a listing of the resource.
      */
-    
     public function index()
     {
-            $clients = Client::get();
-            return view('clients', compact('clients'));
+        $clients = Client::get();
+        return view('clients', compact('clients'));
     }
 
     /**
@@ -26,40 +26,53 @@ class ClientController extends Controller
     {
         return view('addClient');
     }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-    //    $client=new Client();
-    //    $client->clientname=$request->input('clientname');
-    //   $client->phone=$request->input('phone');
-    //   $client->email=$request->input('email');
-    //    $client->website=$request->input('website');
-       //$client->save();
-       //return dd($request->all())
-      $messages = $this->errMsg();
+        // Validation rules
+        $messages = $this->errMsg();
+        $rules = [
+            'clientname' => 'required|max:100|min:5',
+            'phone' => 'required|min:11',
+            'email' => 'required|email:rfc',
+            'website' => 'required',
+            'City' => 'required|in:Cairo,Giza,Alex',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ];
 
-       $data = $request->validate([
-        'clientname' => 'required|max:100|min:5',
-        'phone' =>'required|min:11',
-        'email' =>'required|email:rfc',
-        'website'=>'required',
-        'City'=>'required|max:30',
-        'image'=>'required',
-       ], $messages);
+        // Validate the input
+        $data = $request->validate($rules, $messages);
+    
+        // Get the client record
+    $client = Client::findOrFail($id);
 
-       $imgExt = $request->image->getClientOriginalExtension();
-       $fileName = time() . '.' . $imgExt;
-       $path = 'assets/images';
-       $request->image->move($path, $fileName);
+// Handle the file upload
+if ($request->hasFile('image')) {
+    $image = $request->file('image');
+    // Log file details for debugging
+    \Log::info('Uploaded file details:', [
+        'Original Name' => $image->getClientOriginalName(),
+        'Size' => $image->getSize(),
+        'Mime Type' => $image->getMimeType(),
+        'Extension' => $image->getClientOriginalExtension(),
+    ]);
+    // Handle image upload
+    $fileName = $this->handleImageUpload($request, $client);
+    // Update data with new image file name
+    $data['image'] = $fileName;
+}
 
-       $data['image'] = $fileName;
+        // Set the active status
+        $data['active'] = isset($request->active);
 
-       $data['active'] = isset($request->active);
-       Client::create($data);
-       return redirect('Clients');
-       //return view('clients');
+        // Create the new client record
+        Client::create($data);
+
+        // Redirect to the clients page
+        return redirect('Clients');
     }
 
     /**
@@ -68,34 +81,59 @@ class ClientController extends Controller
     public function show(string $id)
     {
         $client = Client::findOrFail($id);
-        return view('showClient', compact('client'));    
+        return view('showClient', compact('client'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) 
+    public function edit(string $id)
     {
         $client = Client::findOrFail($id);
         return view('editClient', compact('client'));
     }
 
-/**
- * Update the specified resource in storage.
- */
-public function update(Request $request, string $id)
-{
-    $data = $request->validate([
-        'clientname' => 'required|max:100|min:5',
-        'phone' =>'required|min:11',
-        'email' =>'required|email:rfc',
-        'website'=>'required',
-    ]);
-
-    $client = Client::findOrFail($id);
-    $client->update($data);
-    return redirect('Clients');
-}
+    public function update(Request $request, string $id)
+    {
+        // Validation rules
+        $messages = $this->errMsg();
+        $rules = [
+            'clientname' => 'required|max:100|min:5',
+            'phone' => 'required|min:11',
+            'email' => 'required|email:rfc',
+            'website' => 'required',
+            'City' => 'required|in:Cairo,Giza,Alex',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+        ];
+    
+        // Validate the input
+        $data = $request->validate($rules, $messages);
+    
+        // Get the client record
+        $client = Client::findOrFail($id);
+    
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            // Validate image
+            $validated = $request->validate([
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+            // Handle image upload
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/images'), $fileName);
+            // Update data with new image file name
+            $data['image'] = $fileName;
+        }
+    
+        // Set the active status
+        $data['active'] = isset($request->active);
+    
+        // Update the client record
+        $client->update($data);
+    
+        // Redirect to the clients page
+        return redirect('Clients');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -117,24 +155,47 @@ public function update(Request $request, string $id)
         return redirect('trashClient');
     }
 
-// Trash
-public function trash()
-{
-$trashed = Client::onlyTrashed()->get();
-return view('trashClient', compact('trashed'));
-}
-// Restore
-public function restore(string $id)
-{
-    Client::where('id', $id)->restore();
-    return redirect('Clients');
-}
-// Error Custom Messages
-public function errMsg(){
-return [
-    'clientname.required' => 'The Client name is missed, Please Insert',
-    'clientname.min' => 'length less than 5, Please Insert More Chars',
-    'City' => 'Select a city from the following:',
-];
-}
+    // Trash
+    public function trash()
+    {
+        $trashed = Client::onlyTrashed()->get();
+        return view('trashClient', compact('trashed'));
+    }
+
+    // Restore
+    public function restore(string $id)
+    {
+        Client::where('id', $id)->restore();
+        return redirect('Clients');
+    }
+
+    // Error Custom Messages
+    public function errMsg()
+    {
+        return [
+            'clientname.required' => 'The Client name is missing, please insert it.',
+            'clientname.min' => 'The Client name should be at least 5 characters long.',
+            'City' => 'Select a city from the following: Cairo, Giza, Alex.',
+            'image.image' => 'The file you have chosen is not a valid image.',
+            'image.mimes' => 'The file extension is not one of the specified types (jpeg, png, jpg, gif, svg).',
+        ];
+    }
+
+    /**
+     * Method to handle image upload
+     */
+    private function handleImageUpload(Request $request, $client = null)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            // Log file details for debugging
+            \Log::info('Uploaded file details:', [
+                'Original Name' => $image->getClientOriginalName(),
+                'Size' => $image->getSize(),
+                'Mime Type' => $image->getMimeType(),
+                'Extension' => $image->getClientOriginalExtension(),
+            ]);
+            // Handle the upload logic here
+        }
+    }
 }
