@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Traits\UploudFile;
 
 class ClientController extends Controller
 {
+    use UploudFile;
+
     private $columns = ['clientname', 'phone', 'email', 'website'];
 
     /**
@@ -60,8 +63,7 @@ if ($request->hasFile('image')) {
         'Extension' => $image->getClientOriginalExtension(),
     ]);
     // Handle image upload
-    $fileName = $this->handleImageUpload($request, $client);
-    // Update data with new image file name
+    $fileName = $this->upload($request->image, 'assets/newFolder');
     $data['image'] = $fileName;
 }
 
@@ -119,9 +121,10 @@ if ($request->hasFile('image')) {
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             ]);
             // Handle image upload
-            $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('assets/images'), $fileName);
+            //$fileName = time() . '.' . $image->getClientOriginalExtension();
+            //$image->move(public_path('assets/images'), $fileName);
             // Update data with new image file name
+            $fileName = $this->upload($request->image, 'assets/newFolder');
             $data['image'] = $fileName;
         }
     

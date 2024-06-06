@@ -33,7 +33,7 @@ Route::get('test20', [MyController::class,'my_data']);
 Route::get('insertClient', [ClientController::class,'store']);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('stacked');
 });
 
 Route::get('shrouk/{id?}', function ($id = 0) {

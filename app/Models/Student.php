@@ -13,4 +13,13 @@ class Student extends Model
         'studentName',
          'age',
         ];
+/**
+     * The factory instance for this model.
+     *
+     * @return \Database\Factories\StudentFactory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\StudentFactory::new();
+    }
 }

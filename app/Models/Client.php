@@ -15,7 +15,17 @@ class Client extends Model
      'email',
      'website',
      'City',
+     'address',
      'active',
      'image',
     ];
+/**
+     * The factory instance for this model.
+     *
+     * @return \Database\Factories\ClientFactory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\ClientFactory::new();
+    }
 }
