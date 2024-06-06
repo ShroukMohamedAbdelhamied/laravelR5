@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\City;
 class Client extends Model
 {
     use HasFactory, SoftDeletes;
@@ -14,11 +14,15 @@ class Client extends Model
      'phone',
      'email',
      'website',
-     'City',
+     'city_id',
      'address',
      'active',
      'image',
     ];
+
+    public function curCity(){
+        return $this->belongsTo(City::class);
+    }
 /**
      * The factory instance for this model.
      *

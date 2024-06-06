@@ -16,7 +16,7 @@
     <hr>
     <h2><strong>Website: </strong>{{ $client->website }}</h2>
     <hr>
-    <h2><strong>City: </strong>{{ $client->City }}</h2>
+    <h2><strong>City: </strong>{{ $client->curCity->id }}</h2>
     <hr>
     <h2><strong>Active: </strong>{{ $client->active }}</h2>
     <hr>

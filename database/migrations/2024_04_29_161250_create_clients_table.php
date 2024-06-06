@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('phone', 25);
             $table->string('email', 100);
             $table->string('website', 100);
-            $table->string('City', 30);
             $table->boolean('active', 30);
             $table->string('image', 100);
+            $table->foreignId('City_id')->constrained('cities');
             $table->softDeletes();
             $table->timestamps();
         });

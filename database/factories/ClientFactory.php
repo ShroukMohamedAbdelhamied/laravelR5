@@ -10,14 +10,14 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'clientname' => $this->faker->name,
-            'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
-            'website' => $this->faker->url,
-            'city' => $this->faker->city,
-            'address' => $this->faker->address,
-            'active' => true,
-            'image' => 'default.jpg',
+            'clientname' => fake()->name,
+            'phone' => fake()->phoneNumber,
+            'email' => fake()->unique()->safeEmail,
+            'website' => fake()->url,
+            'city_id' => fake()->numberBetween(1, 20),
+            'address' => fake()->address(),
+            'active' => fake()->numberBetween(0, 1),
+            'image' => fake()->imageUrl(640, 480),
         ];
     }
 }
