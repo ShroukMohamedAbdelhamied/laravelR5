@@ -82,8 +82,7 @@ if ($request->hasFile('image')) {
      */
     public function show(string $id)
     {
-        $client = Client::findOrFail($id);
-        //dd($client->city['city']);
+        $client = Client::with('city')->findOrFail($id);
         return view('showClient', compact('client'));
     }
 

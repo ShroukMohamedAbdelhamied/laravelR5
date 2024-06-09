@@ -14,6 +14,6 @@ class City extends Model
     ];
 
     public function clients(){
-    return $this->hasMany(Clients::class);
+    return $this->hasMany(Clients::class, 'city_id');
     }
 }

@@ -16,15 +16,15 @@
     <hr>
     <h2><strong>Website: </strong>{{ $client->website }}</h2>
     <hr>
-    <h2><strong>City: </strong>{{ $client->curCity->id }}</h2>
+    <h2><strong>City: </strong>{{ $client->city->city }}</h2>
     <hr>
     <h2><strong>Active: </strong>{{ $client->active }}</h2>
     <hr>
     <h2><strong>Image:</strong></h2>
-@if ($client->image)
-    <img src="{{ asset('assets/images/' . $client->image) }}" alt="Client Image" class="img-thumbnail">
-@else
-    <span class="text-danger">No valid image available.</span>
-@endif
+    @if ($client->image)
+        <img src="{{ asset('assets/images/' . $client->image) }}" alt="Client Image" class="img-thumbnail">
+    @else
+        <span class="text-danger">No valid image available.</span>
+    @endif
 </body>
 </html>

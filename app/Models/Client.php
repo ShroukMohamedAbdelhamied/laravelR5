@@ -21,7 +21,7 @@ class Client extends Model
     ];
 
     public function curCity(){
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class,'city_id');
     }
 /**
      * The factory instance for this model.
