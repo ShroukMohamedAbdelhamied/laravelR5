@@ -9,9 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 @include('includes.nav')
-
 <div class="container">
   <h2>Clients Data</h2>
   <table class="table table-hover">
@@ -21,7 +19,7 @@
         <th>Phone</th>
         <th>Email</th>
         <th>Website</th>
-        <th>City</th>
+        <th>City</th> 
         <th>Active</th>
         <th>Image</th>
         <th>Edit</th>
@@ -36,7 +34,7 @@
         <td>{{ $client->phone }}</td>
         <td>{{ $client->email }}</td>
         <td>{{ $client->website }}</td>
-        <td>{{ $client->City }}</td>
+        <td>{{ $client->city->city }}</td>
         <td>{{ $client->active ? 'Yes' : 'No' }}</td>
         <td>
     @if ($client->image)
@@ -60,6 +58,5 @@
     </tbody>
   </table>
 </div>
-
 </body>
 </html>

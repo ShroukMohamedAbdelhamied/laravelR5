@@ -9,19 +9,19 @@ use App\Models\City;
 class Client extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable =  [
-    'clientname',
-     'phone',
-     'email',
-     'website',
-     'city_id',
-     'address',
-     'active',
-     'image',
+    protected $fillable = [
+        'clientname',
+        'phone',
+        'email',
+        'website',
+        'city_id', 
+        'active',
+        'image',
+        'address',
     ];
 
-    public function curCity(){
-        return $this->belongsTo(City::class,'city_id');
+    public function city(){
+        return $this->belongsTo(City::class);
     }
 /**
      * The factory instance for this model.

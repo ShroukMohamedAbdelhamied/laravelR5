@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\City;
 use App\Models\Client;
+use App\Models\City;
+
 
 class DatabaseSeeder extends Seeder
 {
