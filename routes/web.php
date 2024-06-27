@@ -19,7 +19,7 @@ Route::post('restoreStudent',[StudentController::class,'restore'])->name('restor
 
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient', [ClientController::class,'create'])->name('addClient');
-Route::get('Clients', [ClientController::class,'index'])->name('Clients');
+Route::get('Clients', [ClientController::class,'index'])->middleware('verified')->name('Clients');
 Route::get('editClients/{id}', [ClientController::class,'edit'])->name('editClients');
 Route::put('updateClients/{id}', [ClientController::class,'update'])->name('updateClients');
 Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
@@ -33,7 +33,7 @@ Route::get('test20', [MyController::class,'my_data']);
 Route::get('insertClient', [ClientController::class,'store']);
 
 Route::get('/', function () {
-    return view('stacked');
+    return view('welcome');
 });
 
 Route::get('shrouk/{id?}', function ($id = 0) {
@@ -82,3 +82,7 @@ Route::post('recform1', [MyController::class, 'receiveData'])->name('receiveform
 
 
 
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
