@@ -19,7 +19,7 @@ Route::post('restoreStudent',[StudentController::class,'restore'])->name('restor
 
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient', [ClientController::class,'create'])->name('addClient');
-Route::get('Clients', [ClientController::class,'index'])->middleware('verified')->name('Clients');
+Route::get('Clients', [ClientController::class, 'index'])->middleware('verified')->name('Clients');
 Route::get('editClients/{id}', [ClientController::class,'edit'])->name('editClients');
 Route::put('updateClients/{id}', [ClientController::class,'update'])->name('updateClients');
 Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
@@ -80,7 +80,12 @@ Route::post('recform1', [MyController::class, 'receiveData'])->name('receiveform
 //Route::get('addClient',[ClientController::class,'create'])->name('receiveform2');
 //Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 
-
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+})->name('facebookRedirect');
+Route::get('/auth/callback', function () {
+   $user = Socialite::driver('facebook')->user();
+});
 
 
 Auth::routes(['verify'=>true]);
